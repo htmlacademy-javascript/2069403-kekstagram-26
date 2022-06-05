@@ -1,8 +1,12 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+const isNumber = (...values) => typeof values === 'number';
+isNumber();
+
+
 const getRandonNum = (min, max) => {
   // если не числа
-  if(typeof min !== 'number' || typeof max !== 'number') {
-    return 'I can\'t compare different types';
+  if(!isNumber(min) || !isNumber(max)) {
+    throw new Error('I can\'t compare different types');
 
   }
   // если оба меньше 0
