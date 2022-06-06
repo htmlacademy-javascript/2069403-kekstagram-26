@@ -23,18 +23,6 @@ const getRandonNum = (min, max) => {
 
 getRandonNum();
 
-// option 1. есть константа length (140)
-const MAX_LENGTH = 140;
-
-const checkCommentLength = (userComment) => userComment.length <= MAX_LENGTH;
-
-checkCommentLength();
-
-
-// имя_функции(проверяемая_строка, максимальная_длина); // Результат: true, если строка проходит по длине, и false — если не проходит
-const checkAnotherComment = (userComment, maxCommentLenght) => {
-  maxCommentLenght = 140;
-  return userComment.length <= maxCommentLenght;
-};
+const checkAnotherComment = (userComment, maxCommentLenght) => userComment.length <= maxCommentLenght;
 
 checkAnotherComment();
