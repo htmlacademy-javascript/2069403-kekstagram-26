@@ -71,12 +71,14 @@ const getRandonNum = (min, max) => {
 // choose random elements from arrays
 const getRandomArrayElement = (elements) => elements[getRandonNum(0, elements.length - 1)];
 
-const createComment = () => ({
-  id: getRandonNum(1, 25),
+const createComment = (id) => ({
+  id,
   avatar: `img/avatar-${getRandonNum(1, 6)}.svg`,
   message: getRandomArrayElement(commentsText),
   name: `${getRandomArrayElement(NAMES)} ${getRandomArrayElement(SURNAMES)}`,
 });
+
+const createComments = (number) => Array.from({length: number}, (_, i) => createComment(i));
 
 // create 1 object
 const createPhoto = (id) => ({
@@ -84,7 +86,7 @@ const createPhoto = (id) => ({
   url: `photos/${getRandonNum(1, 25)}.jpg`,
   description: getRandomArrayElement(photoDescription), // string
   likes: getRandonNum(15, 200),
-  comment: createComment(),
+  comments: createComments(getRandonNum(1, 5)),
 });
 
 
