@@ -2,7 +2,7 @@
 
 const checkAnotherComment = (userComment, maxCommentLenght) => userComment.length <= maxCommentLenght;
 
-checkAnotherComment();
+checkAnotherComment('');
 
 
 const NAMES = [
@@ -71,24 +71,26 @@ const getRandonNum = (min, max) => {
 // choose random elements from arrays
 const getRandomArrayElement = (elements) => elements[getRandonNum(0, elements.length - 1)];
 
-// create 1 object
-const createObject = () => ({
+const createComment = () => ({
   id: getRandonNum(1, 25),
+  avatar: `img/avatar-${getRandonNum(1, 6)}.svg`,
+  message: getRandomArrayElement(commentsText),
+  name: `${getRandomArrayElement(NAMES)} ${getRandomArrayElement(SURNAMES)}`,
+});
+
+// create 1 object
+const createPhoto = (id) => ({
+  id,
   url: `photos/${getRandonNum(1, 25)}.jpg`,
   description: getRandomArrayElement(photoDescription), // string
   likes: getRandonNum(15, 200),
-  comments: {
-    id: getRandonNum(0, 25),
-    avatar: `img/avatar-${getRandonNum(1, 6)}.svg`,
-    message: getRandomArrayElement(commentsText), // comment text, 1 or 2 random sentences
-    name: `${getRandomArrayElement(NAMES)} ${getRandomArrayElement(SURNAMES)}`,
-  },
+  comment: createComment(),
 });
 
-//create 25 objects
-const createUniqueObjects = () => {
-  const uniqueObjects = Array.from({length: OBJECT_COUNT}, createObject);
-  return [...new Set(uniqueObjects)];
-};
 
-createUniqueObjects();
+//create 25 objects
+const createPhotos = () => Array.from({length: OBJECT_COUNT},(_, i) => createPhoto(i));
+
+createPhotos();
+
+
