@@ -7,7 +7,7 @@ const renderPhotos = (photos) => {
 
   photos.forEach(({url, likes, comments}) => {
     const photoItem = thumbnailTemplateContainer.cloneNode(true);
-    photoItem.querySelector('.picture__img').src = url;
+    photoItem.querySelector('img').src = url;
     photoItem.querySelector('.picture__likes').textContent = likes;
     photoItem.querySelector('.picture__comments').textContent = comments.length;
     similarPhotoFragment.appendChild(photoItem);
