@@ -5,29 +5,17 @@ const checkAnotherComment = (userComment, maxCommentLenght) => userComment.lengt
 checkAnotherComment();
 
 
-const isNumber = (value) => typeof value === 'number';
+function getRandomPositiveInteger (a, b) {
 
-const getRandonNum = (min, max) => {
-  if(!isNumber(min) || !isNumber(max)) {
-    return -1;
-  }
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
 
-  min = Math.floor(Math.abs(min));
-  max = Math.floor(Math.abs(max));
-
-  if(min === max) {
-    return Math.floor(min);
-  }
-
-  if(min > max) {
-    [min, max] = [max, min];
-  }
-
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+  return Math.floor(result);
+}
 
 // choose random elements from arrays
-const getRandomArrayElement = (elements) => elements[getRandonNum(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
 
-export {checkAnotherComment, getRandonNum, getRandomArrayElement};
+export {checkAnotherComment, getRandomPositiveInteger, getRandomArrayElement};
