@@ -1,3 +1,6 @@
-import { createPhotos} from './data.js';
+import {createPhotos} from './data.js';
+import {renderPhotos} from './thumbnails.js';
 
-createPhotos();
+const randomPhotos = createPhotos();
+renderPhotos(randomPhotos);
+
