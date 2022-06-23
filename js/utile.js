@@ -1,10 +1,3 @@
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-
-const checkAnotherComment = (userComment, maxCommentLenght) => userComment.length <= maxCommentLenght;
-
-checkAnotherComment();
-
-
 function getRandomPositiveInteger (a, b) {
 
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -18,4 +11,4 @@ function getRandomPositiveInteger (a, b) {
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
 
-export {checkAnotherComment, getRandomPositiveInteger, getRandomArrayElement};
+export {getRandomPositiveInteger, getRandomArrayElement};
