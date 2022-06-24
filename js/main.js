@@ -7,3 +7,4 @@ renderPhotos(randomPhotos);
 
 const randomPictures = document.querySelectorAll('.picture');
 getFullSize(randomPictures);
+
