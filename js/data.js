@@ -1,4 +1,4 @@
-import {getRandonNum, getRandomArrayElement} from './utile.js';
+import {getRandomPositiveInteger, getRandomArrayElement} from './utile.js';
 
 const NAMES = [
   'Иван',
@@ -43,7 +43,7 @@ const OBJECT_COUNT = 25;
 
 const createComment = (id) => ({
   id,
-  avatar: `img/avatar-${getRandonNum(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
   message: getRandomArrayElement(commentsText),
   name: `${getRandomArrayElement(NAMES)} ${getRandomArrayElement(SURNAMES)}`,
 });
@@ -53,10 +53,10 @@ const createComments = (number) => Array.from({length: number}, (_, i) => create
 // create 1 object
 const createPhoto = (id) => ({
   id,
-  url: `photos/${getRandonNum(1, 25)}.jpg`,
+  url: `photos/${getRandomPositiveInteger(1, 25)}.jpg`,
   description: getRandomArrayElement(photoDescription), // string
-  likes: getRandonNum(15, 200),
-  comments: createComments(getRandonNum(1, 5)),
+  likes: getRandomPositiveInteger(15, 200),
+  comments: createComments(getRandomPositiveInteger(1, 5)),
 });
 
 
@@ -64,4 +64,4 @@ const createPhoto = (id) => ({
 const createPhotos = () => Array.from({length: OBJECT_COUNT},(_, i) => createPhoto(i));
 
 
-export {createComment, createComments, createPhoto, createPhotos};
+export {createPhotos};
