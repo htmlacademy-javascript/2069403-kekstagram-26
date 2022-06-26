@@ -4,6 +4,7 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scrollBackground = document.querySelector('body');
 const commentTemplate = document.querySelector('#social__comment').content.querySelector('.social__comment');
+const commentsList = bigPicture.querySelector('.social__comments');
 
 const renderComment = ({avatar, name, message}) => {
   const commentBlock = commentTemplate.cloneNode(true);
@@ -13,7 +14,6 @@ const renderComment = ({avatar, name, message}) => {
   return commentBlock;
 };
 const renderComments = (comments) => {
-  const commentsList = bigPicture.querySelector('.social__comments');
   comments.forEach((comment) => {
     const oneComment = renderComment(comment);
     commentsList.appendChild(oneComment);
@@ -58,12 +58,14 @@ bigPictureCancel.addEventListener('click', (evt) => {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
   scrollBackground.classList.remove('modal-open');
+  commentsList.innerHTML = '';
 });
 
 document.addEventListener('keydown', (evt) => {
   if (evt.keyCode === 27) {
     bigPicture.classList.add('hidden');
     scrollBackground.classList.remove('modal-open');
+    commentsList.innerHTML = '';
   }
 });
 
