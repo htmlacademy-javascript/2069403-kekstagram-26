@@ -10,5 +10,7 @@ function getRandomPositiveInteger (a, b) {
 // choose random elements from arrays
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
+const ESCAPE_KEY = 'Escape';
+const isEscapeKey = (evt) =>  evt.key === ESCAPE_KEY;
 
-export {getRandomPositiveInteger, getRandomArrayElement};
+export {getRandomPositiveInteger, getRandomArrayElement, isEscapeKey};
