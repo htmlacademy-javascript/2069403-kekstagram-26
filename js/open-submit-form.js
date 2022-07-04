@@ -19,10 +19,9 @@ function onEditPhotoEscpaeKey(evt) {
 }
 
 const uploadFile = () => {
-  uploadFileForm.reset();
   // uploadFileForm.querySelector('.img-upload__overlay').classList.remove('hidden');
   imageUploadField.addEventListener('change', () => {
-  // evt.preventDefault();
+    uploadFileForm.reset();
     uploadFileForm.querySelector('.img-upload__overlay').classList.remove('hidden');
     scrollBackground.classList.add('modal-open');
     document.addEventListener('keydown', onEditPhotoEscpaeKey);
