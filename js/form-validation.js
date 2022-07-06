@@ -36,7 +36,7 @@ const getFormSubmit = () => {
 };
 
 const stopPropagationEsc = (evt) => {
-  if(isEscapeKey) {
+  if(isEscapeKey(evt)) {
     evt.stopPropagation();
   }
 };
