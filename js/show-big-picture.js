@@ -5,6 +5,8 @@ const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scrollBackground = document.querySelector('body');
 const commentsList = bigPicture.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social-comment').content.querySelector('.social__comment');
+const displayedCommentNumber = bigPicture.querySelector('.displayed-comment-number');
+const showMoreCommentsButton = bigPicture.querySelector('.comments-loader');
 
 
 const onBigPuctureEscpaeKey = (evt) => {
@@ -30,18 +32,35 @@ const renderComment = ({avatar, name, message}) => {
 
 const renderComments = (comments) => commentsList.append(...comments.map(renderComment));
 
+let Comments = [];
+let currentDisplayedComments = 0;
+
+const showMoreComments = () => {
+  if (Comments.length <= 5) {
+    showMoreCommentsButton.classList.add('hidden');
+  }
+  const forRendering = Comments.slice(0, 5);
+  Comments = Comments.slice(5);
+  renderComments(forRendering);
+
+  currentDisplayedComments += forRendering.length;
+  displayedCommentNumber.textContent = currentDisplayedComments;
+};
+
 const renderBigPicture = (url, likes, comments, description) => {
   bigPicture.querySelector('img').src = url;
   bigPicture.querySelector('.likes-count').textContent = likes;
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
-  renderComments(comments);
+
+  showMoreCommentsButton.classList.remove('hidden');
+  Comments = comments;
+  showMoreComments(Comments);
 };
 
 const showBigPicture = (url, likes, comments, description) => {
+  currentDisplayedComments = 0;
   commentsList.innerHTML = '';
-  bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-  bigPicture.querySelector('.comments-loader').classList.add('hidden');
   scrollBackground.classList.add('modal-open');
 
   renderBigPicture(url, likes, comments, description);
@@ -53,7 +72,10 @@ const showBigPicture = (url, likes, comments, description) => {
 
 bigPictureCancel.addEventListener('click', (evt) => {
   userBigPictureCloseElement(evt);
+
 });
+
+showMoreCommentsButton.addEventListener('click', showMoreComments);
 
 
 export {renderComment, renderComments, showBigPicture};

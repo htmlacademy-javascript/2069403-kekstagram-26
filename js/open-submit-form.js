@@ -19,7 +19,6 @@ function onEditPhotoEscpaeKey(evt) {
 }
 
 const uploadFile = () => {
-  // uploadFileForm.querySelector('.img-upload__overlay').classList.remove('hidden');
   imageUploadField.addEventListener('change', () => {
     uploadFileForm.reset();
     uploadFileForm.querySelector('.img-upload__overlay').classList.remove('hidden');
