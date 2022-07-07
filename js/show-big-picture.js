@@ -6,6 +6,7 @@ const scrollBackground = document.querySelector('body');
 const commentsList = bigPicture.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social-comment').content.querySelector('.social__comment');
 const displayedCommentNumber = bigPicture.querySelector('.displayed-comment-number');
+
 const showMoreCommentsButton = bigPicture.querySelector('.comments-loader');
 
 
@@ -56,6 +57,7 @@ const renderBigPicture = (url, likes, comments, description) => {
   showMoreCommentsButton.classList.remove('hidden');
   Comments = comments;
   showMoreComments(Comments);
+
 };
 
 const showBigPicture = (url, likes, comments, description) => {

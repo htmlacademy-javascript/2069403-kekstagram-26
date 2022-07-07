@@ -6,6 +6,7 @@ const scrollBackground = document.querySelector('body');
 const uploadImageCancel = uploadFileForm.querySelector('.img-upload__cancel');
 
 const closeUploadForm = (evt) => {
+  uploadFileForm.reset();
   evt.preventDefault(evt);
   scrollBackground.classList.remove('modal-open');
   uploadFileForm.querySelector('.img-upload__overlay').classList.add('hidden');
@@ -20,11 +21,9 @@ function onEditPhotoEscpaeKey(evt) {
 
 const uploadFile = () => {
   imageUploadField.addEventListener('change', () => {
-    uploadFileForm.reset();
     uploadFileForm.querySelector('.img-upload__overlay').classList.remove('hidden');
     scrollBackground.classList.add('modal-open');
     document.addEventListener('keydown', onEditPhotoEscpaeKey);
-
   });
 };
 

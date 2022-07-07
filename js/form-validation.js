@@ -1,5 +1,8 @@
+import { isEscapeKey } from './utile.js';
+
 const uploadFileForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadFileForm.querySelector('[name="hashtags"]');
+const commentInput = uploadFileForm.querySelector('[name="description"]');
 
 const pristine = new Pristine(uploadFileForm, {
   classTo:'img-upload__field-wrapper',
@@ -21,6 +24,8 @@ pristine.addValidator(hashtagInput, (value) => serializeHastangs(value).every((i
 
 pristine.addValidator(hashtagInput, (value) => isUnique(serializeHastangs(value)), 'Хэштеги не могут повторяться');
 
+pristine.addValidator(commentInput, (value) => value.length <= 140, 'Максимальная длина комментария - 140 символов' );
+
 const getFormSubmit = () => {
   uploadFileForm.addEventListener('submit', (evt) => {
     const isValid = pristine.validate();
@@ -29,5 +34,19 @@ const getFormSubmit = () => {
     }
   });
 };
+
+const stopPropagationEsc = (evt) => {
+  if(isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
+};
+
+hashtagInput.addEventListener('keydown', (evt) => {
+  stopPropagationEsc(evt);
+});
+
+commentInput.addEventListener('keydown', (evt) => {
+  stopPropagationEsc(evt);
+});
 
 export {getFormSubmit};
