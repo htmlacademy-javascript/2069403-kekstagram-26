@@ -34,14 +34,15 @@ const renderComment = ({avatar, name, message}) => {
 const renderComments = (comments) => commentsList.append(...comments.map(renderComment));
 
 let Comments = [];
+const COMMENT_LIST_MAX_LENGTH = 5;
 let currentDisplayedComments = 0;
 
 const showMoreComments = () => {
-  if (Comments.length <= 5) {
+  if (Comments.length <= COMMENT_LIST_MAX_LENGTH) {
     showMoreCommentsButton.classList.add('hidden');
   }
-  const forRendering = Comments.slice(0, 5);
-  Comments = Comments.slice(5);
+  const forRendering = Comments.slice(0, COMMENT_LIST_MAX_LENGTH);
+  Comments = Comments.slice(COMMENT_LIST_MAX_LENGTH);
   renderComments(forRendering);
 
   currentDisplayedComments += forRendering.length;

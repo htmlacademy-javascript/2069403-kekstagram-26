@@ -30,15 +30,21 @@ const stopPropagationEsc = (evt) => {
 
 pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).length <= 5, 'Допускается не более пяти хэштегов' );
 
-pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => item.startsWith('#')), 'Хэштег должен начинаться с символа #' );
+const HASHTAG_START = '#';
+pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => item.startsWith(HASHTAG_START)), 'Хэштег должен начинаться с символа #' );
 
-pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => item.length >= 2 && item.length <= 19), 'Максимальная длина - 20 символов, минимальная - 2');
+const HASHTAG_MIN_LENGTH = 2;
+const HASHTAG_MAX_LENGTH = 19;
 
-pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/.test(item)), 'Хэштег должен состоять только из букв и цифр');
+pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => item.length >= HASHTAG_MIN_LENGTH && item.length <= HASHTAG_MAX_LENGTH), 'Максимальная длина - 20 символов, минимальная - 2');
+
+const tagRegexp = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => tagRegexp.test(item)), 'Хэштег должен состоять только из букв и цифр');
 
 pristine.addValidator(hashtagInput, (value) => isUnique(serializeHashtags(value)), 'Хэштеги не могут повторяться');
 
-pristine.addValidator(commentInput, (value) => value.length <= 140, 'Максимальная длина комментария - 140 символов' );
+const COMMENT_MAX_LENGTH = 140;
+pristine.addValidator(commentInput, (value) => value.length <= COMMENT_MAX_LENGTH, 'Максимальная длина комментария - 140 символов' );
 
 hashtagInput.addEventListener('keydown', stopPropagationEsc);
 
