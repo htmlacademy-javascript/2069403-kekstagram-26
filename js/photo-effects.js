@@ -14,11 +14,10 @@ const IMAGE_MAX_SCALE = 100;
 const IMAGE_MIN_SCALE = 25;
 
 const changeImageScale = (step) => {
-  const imageInitialScale = getIntegerValue();
-  if(imageInitialScale <= IMAGE_MAX_SCALE && imageInitialScale > IMAGE_MIN_SCALE) {
-    const imageCurrentScale = imageInitialScale + step;
-    imageUploadPreview.style.transform = `scale(${imageCurrentScale / 100})`;
-    scaleControlValue.value = `${imageCurrentScale }%`;
+  const imageInitialScale = getIntegerValue() + step;
+  if(imageInitialScale <= IMAGE_MAX_SCALE && imageInitialScale >= IMAGE_MIN_SCALE) {
+    imageUploadPreview.style.transform = `scale(${imageInitialScale / 100})`;
+    scaleControlValue.value = `${imageInitialScale }%`;
   }
 };
 
