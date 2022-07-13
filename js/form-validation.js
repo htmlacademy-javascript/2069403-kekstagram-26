@@ -1,5 +1,9 @@
 import { isEscapeKey } from './utile.js';
 
+const HASHTAG_START = '#';
+const HASHTAG_MIN_LENGTH = 2;
+const HASHTAG_MAX_LENGTH = 19;
+
 const uploadFileForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadFileForm.querySelector('[name="hashtags"]');
 const commentInput = uploadFileForm.querySelector('[name="description"]');
@@ -30,11 +34,9 @@ const stopPropagationEsc = (evt) => {
 
 pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).length <= 5, 'Допускается не более пяти хэштегов' );
 
-const HASHTAG_START = '#';
+
 pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => item.startsWith(HASHTAG_START)), 'Хэштег должен начинаться с символа #' );
 
-const HASHTAG_MIN_LENGTH = 2;
-const HASHTAG_MAX_LENGTH = 19;
 
 pristine.addValidator(hashtagInput, (value) => serializeHashtags(value).every((item) => item.length >= HASHTAG_MIN_LENGTH && item.length <= HASHTAG_MAX_LENGTH), 'Максимальная длина - 20 символов, минимальная - 2');
 
