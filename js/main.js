@@ -1,7 +1,7 @@
 import {createPhotos} from './data.js';
 import { getFormSubmit } from './form-validation.js';
 import { uploadFile } from './open-submit-form.js';
-import { initChangeEffects, makePictureBigger, makePictureSmaller, changeEffectLevel,getSliderValue} from'./photo-effects.js';
+import { initChangeEffects, makePictureBigger, makePictureSmaller} from'./photo-effects.js';
 import {renderPhotos} from './thumbnails.js';
 
 
@@ -12,5 +12,3 @@ getFormSubmit();
 makePictureBigger();
 makePictureSmaller();
 initChangeEffects();
-changeEffectLevel();
-getSliderValue();
