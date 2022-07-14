@@ -1,4 +1,5 @@
 import { showSuccessMessage, showErrorUploadMessage } from './error-messages.js';
+import { getSliderValue } from './photo-effects.js';
 import { isEscapeKey } from './utile.js';
 
 const HASHTAG_START = '#';
@@ -6,6 +7,7 @@ const HASHTAG_MIN_LENGTH = 2;
 const HASHTAG_MAX_LENGTH = 19;
 
 const uploadFileForm = document.querySelector('.img-upload__form');
+const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
 const hashtagInput = uploadFileForm.querySelector('[name="hashtags"]');
 const commentInput = uploadFileForm.querySelector('[name="description"]');
 
@@ -33,6 +35,10 @@ const getFormSubmit = (onSuccess) => {
         if(response.ok) {
           showSuccessMessage();
           onSuccess();
+          uploadFileForm.reset();
+          imageUploadPreview.style.filter = '';
+          imageUploadPreview.style.transform = 'scale(100%)';
+          getSliderValue();
         }
       }).catch((error) =>
         showErrorUploadMessage(error));
