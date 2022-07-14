@@ -1,4 +1,5 @@
 import { showSuccessMessage, showErrorUploadMessage } from './error-messages.js';
+import { getSliderValue } from './photo-effects.js';
 import { isEscapeKey } from './utile.js';
 
 const HASHTAG_START = '#';
@@ -37,6 +38,7 @@ const getFormSubmit = (onSuccess) => {
           uploadFileForm.reset();
           imageUploadPreview.style.filter = '';
           imageUploadPreview.style.transform = 'scale(100%)';
+          getSliderValue();
         }
       }).catch((error) =>
         showErrorUploadMessage(error));

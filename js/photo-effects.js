@@ -143,4 +143,4 @@ noUiSlider.create(effectLevelSlider, {
 );
 
 
-export {makePictureBigger, makePictureSmaller, initChangeEffects};
+export {makePictureBigger, makePictureSmaller, initChangeEffects, getSliderValue};
