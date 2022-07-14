@@ -1,3 +1,4 @@
+import { showSuccessMessage, showUploadMessage } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
 
 const HASHTAG_START = '#';
@@ -17,11 +18,24 @@ const isUnique = (arr) => new Set(arr).size === arr.length;
 
 const serializeHashtags = (value) => value.trim().toLowerCase().split(/\s+/);
 
-const getFormSubmit = () => {
+const getFormSubmit = (onSuccess) => {
   uploadFileForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isValid = pristine.validate();
-    if (!isValid) {
-      evt.preventDefault();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+      fetch('https://26.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      ).then((response) => {
+        if(response.ok) {
+          showSuccessMessage();
+          onSuccess();
+        }
+      }).catch((error) =>
+        showUploadMessage(error));
     }
   });
 };
