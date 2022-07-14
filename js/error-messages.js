@@ -2,11 +2,11 @@ import { isEscapeKey } from './utile.js';
 
 const loadErrorPopUpTemplate = document.querySelector('#error-load').content;
 const uploadErrorPopUpTemplate = document.querySelector('#error').content;
-const uploadSuccessPopUpTemplate = document.querySelector('#success').content;
+const uploadSuccessPopUp = document.querySelector('#success').content.querySelector('.success');
+const successPopup = uploadSuccessPopUp.cloneNode(true);
 
 const closeSuccessPopUp = () => {
-  const uploadErrorPopUp = document.body.querySelector('.success');
-  uploadErrorPopUp.remove();
+  successPopup.remove();
 };
 
 const onSuccessMessageButton = () => {
@@ -30,13 +30,7 @@ const onSuccessMessageEscKey = () => {
   });
 };
 
-const showErrorLoadMessage = () => {
-  const loadErrorPopUp = loadErrorPopUpTemplate.cloneNode(true);
-  document.body.append(loadErrorPopUp);
-};
-
 const showSuccessMessage = () => {
-  const successPopup = uploadSuccessPopUpTemplate.cloneNode(true);
   // document.querySelector('body').insertAdjacentHTML('beforeend', successPopup);
   document.body.append(successPopup);
 
@@ -45,11 +39,15 @@ const showSuccessMessage = () => {
   onDocumentClick();
 };
 
+const showErrorLoadMessage = () => {
+  const loadErrorPopUp = loadErrorPopUpTemplate.cloneNode(true);
+  document.body.append(loadErrorPopUp);
+};
 
-const showUploadMessage = () => {
+const showErrorUploadMessage = () => {
   const uloadErrorPopUp = uploadErrorPopUpTemplate.cloneNode(true);
   document.body.append(uloadErrorPopUp);
 };
 
 
-export {showErrorLoadMessage, showUploadMessage, showSuccessMessage };
+export {showErrorLoadMessage, showErrorUploadMessage, showSuccessMessage };

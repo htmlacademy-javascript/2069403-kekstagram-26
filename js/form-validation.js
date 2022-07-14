@@ -1,4 +1,4 @@
-import { showSuccessMessage, showUploadMessage } from './error-messages.js';
+import { showSuccessMessage, showErrorUploadMessage } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
 
 const HASHTAG_START = '#';
@@ -35,7 +35,7 @@ const getFormSubmit = (onSuccess) => {
           onSuccess();
         }
       }).catch((error) =>
-        showUploadMessage(error));
+        showErrorUploadMessage(error));
     }
   });
 };
