@@ -1,13 +1,12 @@
 import { isEscapeKey } from './utile.js';
 
-const loadErrorPopUpTemplate = document.querySelector('#error-load').content;
 const uploadErrorPopUp = document.querySelector('#error').content.querySelector('.error');
 const uploadSuccessPopUp = document.querySelector('#success').content.querySelector('.success');
 const successPopup = uploadSuccessPopUp.cloneNode(true);
 const errorPopUp = uploadErrorPopUp.cloneNode(true);
 
 const closeSuccessPopUp = () => {
-  successPopup.remove();
+  document.querySelectorAll('.success').forEach((element) => element.remove());
 };
 
 const onSuccessMessageButton = () => {
@@ -32,24 +31,25 @@ const onSuccessMessageEscKey = () => {
 };
 
 const closeErrorPopUp = () => {
-  errorPopUp.remove();
+  document.querySelectorAll('.error').forEach((element) => element.remove());
 };
 
 const onErrorMessageButton = () => {
   const errorButton = document.querySelector('.error__button');
-  errorButton.addEventListener('click', () => {
-    closeErrorPopUp();
-  });
+  errorButton.addEventListener('click', closeErrorPopUp);
 };
 
 const onErrorMessageEscKey = () => {
   document.addEventListener('keydown', (evt) => {
     if(isEscapeKey(evt)) {
-      if(!(document.querySelector('body').lastChild.classList === 'error')) {
-        evt.stopPropagation();
-      }
       closeErrorPopUp();
     }
+  });
+};
+
+const onDocumentErrorClick = () => {
+  document.addEventListener('click', () => {
+    closeErrorPopUp();
   });
 };
 
@@ -63,8 +63,9 @@ const showSuccessMessage = () => {
 };
 
 const showErrorLoadMessage = () => {
-  const loadErrorPopUp = loadErrorPopUpTemplate.cloneNode(true);
-  document.body.append(loadErrorPopUp);
+  errorPopUp.querySelector('.error__title').textContent = 'Упс, что-то пошло не так';
+  errorPopUp.querySelector('.error__button').classList.add('hidden');
+  document.body.append(errorPopUp);
 };
 
 const showErrorUploadMessage = () => {
@@ -72,6 +73,7 @@ const showErrorUploadMessage = () => {
 
   onErrorMessageButton();
   onErrorMessageEscKey();
+  onDocumentErrorClick();
 };
 
 

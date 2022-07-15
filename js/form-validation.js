@@ -1,5 +1,4 @@
-import { showSuccessMessage, showErrorUploadMessage } from './error-messages.js';
-import { getSliderValue } from './photo-effects.js';
+import { sendData, getSurverDataSuccess, getSurverDataFail } from './api.js';
 import { isEscapeKey } from './utile.js';
 
 const HASHTAG_START = '#';
@@ -7,7 +6,6 @@ const HASHTAG_MIN_LENGTH = 2;
 const HASHTAG_MAX_LENGTH = 19;
 
 const uploadFileForm = document.querySelector('.img-upload__form');
-const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
 const hashtagInput = uploadFileForm.querySelector('[name="hashtags"]');
 const commentInput = uploadFileForm.querySelector('[name="description"]');
 
@@ -20,28 +18,13 @@ const isUnique = (arr) => new Set(arr).size === arr.length;
 
 const serializeHashtags = (value) => value.trim().toLowerCase().split(/\s+/);
 
-const getFormSubmit = (onSuccess) => {
+const getFormSubmit = () => {
   uploadFileForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
       const formData = new FormData(evt.target);
-      fetch('https://26.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        }
-      ).then((response) => {
-        if(response.ok) {
-          showSuccessMessage();
-          onSuccess();
-          uploadFileForm.reset();
-          imageUploadPreview.style.filter = '';
-          imageUploadPreview.style.transform = 'scale(100%)';
-          getSliderValue();
-        }
-      }).catch((error) =>
-        showErrorUploadMessage(error));
+      sendData(formData, getSurverDataSuccess, getSurverDataFail);
     }
   });
 };
