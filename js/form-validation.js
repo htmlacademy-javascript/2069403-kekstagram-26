@@ -1,9 +1,8 @@
 import { showErrorUploadMessage } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
 import { showSuccessMessage } from './error-messages.js';
-import { getSliderValue } from './photo-effects.js';
-// import { closeUploadForm } from './open-submit-form.js';
 import { sendData } from './api.js';
+import { getDefaultForm } from './open-submit-form.js';
 
 
 const HASHTAG_START = '#';
@@ -11,9 +10,9 @@ const HASHTAG_MIN_LENGTH = 2;
 const HASHTAG_MAX_LENGTH = 19;
 
 const uploadFileForm = document.querySelector('.img-upload__form');
-const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
 const hashtagInput = uploadFileForm.querySelector('[name="hashtags"]');
 const commentInput = uploadFileForm.querySelector('[name="description"]');
+const submitButton = uploadFileForm.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(uploadFileForm, {
   classTo:'img-upload__field-wrapper',
@@ -24,14 +23,20 @@ const isUnique = (arr) => new Set(arr).size === arr.length;
 
 const serializeHashtags = (value) => value.trim().toLowerCase().split(/\s+/);
 
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
 const getSurverDataSuccess = (response) => {
   if(response.ok) {
+    unblockSubmitButton();
     showSuccessMessage();
-    // closeUploadForm();
     uploadFileForm.reset();
-    imageUploadPreview.style.filter = '';
-    imageUploadPreview.style.transform = 'scale(100%)';
-    getSliderValue();
+    getDefaultForm();
   }
 };
 
@@ -40,6 +45,7 @@ const getFormSubmit = () => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
+      blockSubmitButton();
       const formData = new FormData(evt.target);
       sendData(formData, getSurverDataSuccess, showErrorUploadMessage);
     }
@@ -73,4 +79,4 @@ hashtagInput.addEventListener('keydown', stopPropagationEsc);
 
 commentInput.addEventListener('keydown', stopPropagationEsc);
 
-export {getFormSubmit};
+export {getFormSubmit, unblockSubmitButton};

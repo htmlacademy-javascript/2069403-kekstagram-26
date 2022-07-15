@@ -1,3 +1,4 @@
+import { unblockSubmitButton } from './form-validation.js';
 import { closeUploadForm, onEditPhotoEscpaeKey } from './open-submit-form.js';
 import { isEscapeKey } from './utile.js';
 
@@ -58,8 +59,8 @@ const showSuccessMessage = (evt) => {
 };
 
 const showErrorUploadMessage = (evt) => {
+  unblockSubmitButton();
   document.body.append(errorPopUp);
-
   onErrorMessageButton();
   onEditPhotoEscpaeKey(evt);
   onDocumentErrorClick();

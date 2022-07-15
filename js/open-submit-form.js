@@ -1,10 +1,12 @@
 import { closeErrorPopUp } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
+import { getSliderValue } from './photo-effects.js';
 
 const uploadFileForm = document.querySelector('.img-upload__form');
 const imageUploadField = document.querySelector('#upload-file');
 const scrollBackground = document.querySelector('body');
-const uploadImageCancel = uploadFileForm.querySelector('.img-upload__cancel');
+const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
+const uploadImageCancel = uploadFileForm.querySelector('#upload-cancel');
 
 const closeUploadForm = () => {
   uploadFileForm.reset();
@@ -30,8 +32,16 @@ const uploadFile = () => {
   });
 };
 
+const getDefaultForm = () => {
+  imageUploadPreview.style.filter = '';
+  imageUploadPreview.style.transform = 'scale(100%)';
+  getSliderValue();
+};
+
 uploadImageCancel.addEventListener('click', (evt) => {
   closeUploadForm(evt);
+  uploadFileForm.reset();
+  getDefaultForm();
 });
 
-export {uploadFile, onEditPhotoEscpaeKey, closeUploadForm};
+export {uploadFile, onEditPhotoEscpaeKey, closeUploadForm, getDefaultForm};
