@@ -12,6 +12,7 @@ const HASHTAG_MAX_LENGTH = 19;
 const uploadFileForm = document.querySelector('.img-upload__form');
 const hashtagInput = uploadFileForm.querySelector('[name="hashtags"]');
 const commentInput = uploadFileForm.querySelector('[name="description"]');
+const submitButton = uploadFileForm.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(uploadFileForm, {
   classTo:'img-upload__field-wrapper',
@@ -22,9 +23,17 @@ const isUnique = (arr) => new Set(arr).size === arr.length;
 
 const serializeHashtags = (value) => value.trim().toLowerCase().split(/\s+/);
 
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
 
 const getSurverDataSuccess = (response) => {
   if(response.ok) {
+    unblockSubmitButton();
     showSuccessMessage();
     uploadFileForm.reset();
     getDefaultForm();
@@ -36,6 +45,7 @@ const getFormSubmit = () => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
+      blockSubmitButton();
       const formData = new FormData(evt.target);
       sendData(formData, getSurverDataSuccess, showErrorUploadMessage);
     }
@@ -69,4 +79,4 @@ hashtagInput.addEventListener('keydown', stopPropagationEsc);
 
 commentInput.addEventListener('keydown', stopPropagationEsc);
 
-export {getFormSubmit};
+export {getFormSubmit, unblockSubmitButton};
