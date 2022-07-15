@@ -1,3 +1,4 @@
+import { closeErrorPopUp } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
 
 const uploadFileForm = document.querySelector('.img-upload__form');
@@ -13,8 +14,11 @@ const closeUploadForm = () => {
 };
 
 function onEditPhotoEscpaeKey(evt) {
-  if(isEscapeKey(evt)) {
-    closeUploadForm(evt);
+  if (isEscapeKey(evt)) {
+    if (!document.querySelector('.error')) {
+      closeUploadForm(evt);
+    }
+    closeErrorPopUp();
   }
 }
 
@@ -30,4 +34,4 @@ uploadImageCancel.addEventListener('click', (evt) => {
   closeUploadForm(evt);
 });
 
-export {uploadFile, closeUploadForm};
+export {uploadFile, onEditPhotoEscpaeKey, closeUploadForm};

@@ -1,3 +1,4 @@
+import { closeUploadForm, onEditPhotoEscpaeKey } from './open-submit-form.js';
 import { isEscapeKey } from './utile.js';
 
 const uploadErrorPopUp = document.querySelector('#error').content.querySelector('.error');
@@ -11,15 +12,11 @@ const closeSuccessPopUp = () => {
 
 const onSuccessMessageButton = () => {
   const successButton = document.body.querySelector('.success__button');
-  successButton.addEventListener('click', () => {
-    closeSuccessPopUp();
-  });
+  successButton.addEventListener('click', closeSuccessPopUp);
 };
 
 const onDocumentClick = () => {
-  document.addEventListener('click', () => {
-    closeSuccessPopUp();
-  });
+  document.addEventListener('click', closeSuccessPopUp);
 };
 
 const onSuccessMessageEscKey = () => {
@@ -39,28 +36,11 @@ const onErrorMessageButton = () => {
   errorButton.addEventListener('click', closeErrorPopUp);
 };
 
-const onErrorMessageEscKey = () => {
-  document.addEventListener('keydown', (evt) => {
-    if(isEscapeKey(evt)) {
-      closeErrorPopUp();
-    }
-  });
-};
 
 const onDocumentErrorClick = () => {
-  document.addEventListener('click', () => {
-    closeErrorPopUp();
-  });
+  document.addEventListener('click', closeErrorPopUp);
 };
 
-const showSuccessMessage = () => {
-  // document.querySelector('body').insertAdjacentHTML('beforeend', successPopup);
-  document.body.append(successPopup);
-
-  onSuccessMessageButton();
-  onSuccessMessageEscKey();
-  onDocumentClick();
-};
 
 const showErrorLoadMessage = () => {
   errorPopUp.querySelector('.error__title').textContent = 'Упс, что-то пошло не так';
@@ -68,13 +48,22 @@ const showErrorLoadMessage = () => {
   document.body.append(errorPopUp);
 };
 
-const showErrorUploadMessage = () => {
+const showSuccessMessage = (evt) => {
+  document.body.append(successPopup);
+
+  onSuccessMessageButton();
+  onSuccessMessageEscKey();
+  onDocumentClick();
+  closeUploadForm(evt);
+};
+
+const showErrorUploadMessage = (evt) => {
   document.body.append(errorPopUp);
 
   onErrorMessageButton();
-  onErrorMessageEscKey();
+  onEditPhotoEscpaeKey(evt);
   onDocumentErrorClick();
 };
 
 
-export {showErrorLoadMessage, showErrorUploadMessage, showSuccessMessage };
+export {showErrorLoadMessage, showErrorUploadMessage, showSuccessMessage, closeErrorPopUp};
