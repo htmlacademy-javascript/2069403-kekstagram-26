@@ -13,13 +13,17 @@ const renderPhoto = ({url, likes, comments, description}) => {
   return photoItem;
 };
 
+
 const renderPhotos = (photos) => {
-  const similarPhotoFragment = document.createDocumentFragment(); // создаём фрагмент
-  photos.forEach((photo) => {
+  const similarPhotoFragment = document.createDocumentFragment();// создаём фрагмент
+  photos.slice().forEach((photo) => {
     const onePhoto = renderPhoto(photo);
     similarPhotoFragment.appendChild(onePhoto); // прикрепляем к фагменту
   });
+  // picturesContainer.innerHTML = '';
   picturesContainer.appendChild(similarPhotoFragment); // приркепляем фото в контейнер
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
+
 
 export {renderPhotos};
