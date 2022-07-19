@@ -7,6 +7,22 @@ const imageUploadField = document.querySelector('#upload-file');
 const scrollBackground = document.querySelector('body');
 const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
 const uploadImageCancel = uploadFileForm.querySelector('#upload-cancel');
+const fileChooser = document.querySelector('.img-upload__start input[type=file]');
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+const changeDefaultPhoto = () => {
+  fileChooser.addEventListener('change', () => {
+    const file = fileChooser.files[0];
+    const fileName = file.name.toLowerCase();
+
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+    if(matches) {
+      imageUploadPreview.querySelector('img').src = URL.createObjectURL(file);
+    }
+  });
+};
 
 const closeUploadForm = () => {
   uploadFileForm.reset();
@@ -25,6 +41,7 @@ function onEditPhotoEscpaeKey(evt) {
 }
 
 const uploadFile = () => {
+  changeDefaultPhoto();
   imageUploadField.addEventListener('change', () => {
     uploadFileForm.querySelector('.img-upload__overlay').classList.remove('hidden');
     scrollBackground.classList.add('modal-open');
