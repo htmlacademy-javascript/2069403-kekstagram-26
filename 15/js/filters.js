@@ -11,8 +11,6 @@ const photoFiltersForm = photoFilters.querySelector('.img-filters__form');
 
 const RANDOM_PHOTOS_COUNT = 10;
 
-let serverPhotoData;
-let checkedFilter = defaultFilter;
 
 const shuffleArrayPictures = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -27,8 +25,7 @@ const getRandomPhotos = (photos) => {
   return photosCopy.slice(0, RANDOM_PHOTOS_COUNT);
 };
 
-const compareCommentsNumber = (a, b) => b.comments.length - a.comments.length;
-const sortPhotosByCommentsNumber = (photos) => photos.slice().sort(compareCommentsNumber);
+const sortPhotosByCommentsNumber = (photos) => photos.slice().sort((a, b) => b.comments.length - a.comments.length);
 
 const clearPhotosContainer = () => {
   const renderedPhotos = document.querySelectorAll('.picture');
@@ -37,30 +34,28 @@ const clearPhotosContainer = () => {
   });
 };
 
-const filterPhotos = (evt) => {
+const filterPhotos = (evt, photos) => {
   clearPhotosContainer();
 
   if (evt.target === defaultFilter) {
-    renderPhotos(serverPhotoData);
+    renderPhotos(photos);
   }
   if (evt.target === randomFilter) {
-    renderPhotos(getRandomPhotos(serverPhotoData));
+    renderPhotos(getRandomPhotos(photos));
   }
   if (evt.target === discussedFilter) {
-    renderPhotos(sortPhotosByCommentsNumber(serverPhotoData));
+    renderPhotos(sortPhotosByCommentsNumber(photos));
   }
 };
 
 
 const startFiltering = (photos) => {
-  serverPhotoData = photos;
-
-  photoFiltersForm.addEventListener('click', (debounce(filterPhotos)));
+  photoFiltersForm.addEventListener('click', debounce((evt) => filterPhotos(evt, photos)));
 
   photoFiltersForm.addEventListener('click', (evt) => {
-    checkedFilter.classList.remove('img-filters__button--active');
-    checkedFilter = evt.target;
-    checkedFilter.classList.add('img-filters__button--active');
+    const filterActive = document.querySelectorAll('.img-filters__button--active');
+    filterActive.forEach((element) => element.classList.remove('img-filters__button--active'));
+    evt.target.classList.add('img-filters__button--active');
   });
 };
 
