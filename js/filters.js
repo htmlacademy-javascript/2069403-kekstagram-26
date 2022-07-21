@@ -3,13 +3,13 @@ import { showErrorUploadMessage } from './error-messages.js';
 import { renderPhotos } from './thumbnails.js';
 import { debounce } from './utile.js';
 
+const RANDOM_PHOTOS_COUNT = 10;
+
 const photoFilters = document.querySelector('.img-filters');
 const defaultFilter = photoFilters.querySelector('#filter-default');
 const randomFilter = photoFilters.querySelector('#filter-random');
 const discussedFilter = photoFilters.querySelector('#filter-discussed');
 const photoFiltersForm = photoFilters.querySelector('.img-filters__form');
-
-const RANDOM_PHOTOS_COUNT = 10;
 
 
 const shuffleArrayPictures = (array) => {
@@ -59,13 +59,13 @@ const startFiltering = (photos) => {
   });
 };
 
-const initRerendering = (photos) => {
+const initRendering = (photos) => {
   renderPhotos(photos);
   startFiltering(photos);
 };
 
 const showFilteredGallery = () => {
-  getData(initRerendering, showErrorUploadMessage);
+  getData(initRendering, showErrorUploadMessage);
 };
 
 export { showFilteredGallery };

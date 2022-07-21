@@ -7,39 +7,39 @@ const uploadSuccessPopUp = document.querySelector('#success').content.querySelec
 const successPopup = uploadSuccessPopUp.cloneNode(true);
 const errorPopUp = uploadErrorPopUp.cloneNode(true);
 
-const closeSuccessPopUp = () => {
+const onCloseSuccessPopUp = () => {
   document.querySelectorAll('.success').forEach((element) => element.remove());
 };
 
 const onSuccessMessageButton = () => {
   const successButton = document.body.querySelector('.success__button');
-  successButton.addEventListener('click', closeSuccessPopUp);
+  successButton.addEventListener('click', onCloseSuccessPopUp);
 };
 
 const onDocumentClick = () => {
-  document.addEventListener('click', closeSuccessPopUp);
+  document.addEventListener('click', onCloseSuccessPopUp);
 };
 
 const onSuccessMessageEscKey = () => {
   document.addEventListener('keydown', (evt) => {
     if(isEscapeKey(evt)) {
-      closeSuccessPopUp();
+      onCloseSuccessPopUp();
     }
   });
 };
 
-const closeErrorPopUp = () => {
+const onCloseErrorPopUp = () => {
   document.querySelectorAll('.error').forEach((element) => element.remove());
 };
 
 const onErrorMessageButton = () => {
   const errorButton = document.querySelector('.error__button');
-  errorButton.addEventListener('click', closeErrorPopUp);
+  errorButton.addEventListener('click', onCloseErrorPopUp);
 };
 
 
 const onDocumentErrorClick = () => {
-  document.addEventListener('click', closeErrorPopUp);
+  document.addEventListener('click', onCloseErrorPopUp);
 };
 
 
@@ -67,4 +67,4 @@ const showErrorUploadMessage = (evt) => {
 };
 
 
-export {showErrorLoadMessage, showErrorUploadMessage, showSuccessMessage, closeErrorPopUp};
+export {showErrorLoadMessage, showErrorUploadMessage, showSuccessMessage, onCloseErrorPopUp};

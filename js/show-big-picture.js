@@ -7,7 +7,7 @@ const commentsList = bigPicture.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social-comment').content.querySelector('.social__comment');
 const displayedCommentNumber = bigPicture.querySelector('.displayed-comment-number');
 
-const showMoreCommentsButton = bigPicture.querySelector('.comments-loader');
+const onShowMoreCommentsButton = bigPicture.querySelector('.comments-loader');
 
 
 const onBigPuctureEscpaeKey = (evt) => {
@@ -39,7 +39,7 @@ let currentDisplayedComments = 0;
 
 const showMoreComments = () => {
   if (Comments.length <= COMMENT_LIST_MAX_LENGTH) {
-    showMoreCommentsButton.classList.add('hidden');
+    onShowMoreCommentsButton.classList.add('hidden');
   }
   const forRendering = Comments.slice(0, COMMENT_LIST_MAX_LENGTH);
   Comments = Comments.slice(COMMENT_LIST_MAX_LENGTH);
@@ -55,7 +55,7 @@ const renderBigPicture = (url, likes, comments, description) => {
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
 
-  showMoreCommentsButton.classList.remove('hidden');
+  onShowMoreCommentsButton.classList.remove('hidden');
   Comments = comments;
   showMoreComments(Comments);
 
@@ -78,7 +78,7 @@ bigPictureCancel.addEventListener('click', (evt) => {
 
 });
 
-showMoreCommentsButton.addEventListener('click', showMoreComments);
+onShowMoreCommentsButton.addEventListener('click', showMoreComments);
 
 
 export {renderComment, renderComments, showBigPicture};
