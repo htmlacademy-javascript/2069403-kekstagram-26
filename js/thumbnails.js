@@ -15,13 +15,12 @@ const renderPhoto = ({url, likes, comments, description}) => {
 
 
 const renderPhotos = (photos) => {
-  const similarPhotoFragment = document.createDocumentFragment();// создаём фрагмент
+  const similarPhotoFragment = document.createDocumentFragment();
   photos.slice().forEach((photo) => {
     const onePhoto = renderPhoto(photo);
-    similarPhotoFragment.appendChild(onePhoto); // прикрепляем к фагменту
+    similarPhotoFragment.appendChild(onePhoto);
   });
-  // picturesContainer.innerHTML = '';
-  picturesContainer.appendChild(similarPhotoFragment); // приркепляем фото в контейнер
+  picturesContainer.appendChild(similarPhotoFragment);
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 

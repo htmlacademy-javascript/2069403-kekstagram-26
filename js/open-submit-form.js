@@ -1,4 +1,4 @@
-import { closeErrorPopUp } from './error-messages.js';
+import { onCloseErrorPopUp } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
 import { getSliderValue } from './photo-effects.js';
 
@@ -36,7 +36,7 @@ function onEditPhotoEscpaeKey(evt) {
     if (!document.querySelector('.error')) {
       closeUploadForm(evt);
     }
-    closeErrorPopUp();
+    onCloseErrorPopUp();
   }
 }
 
