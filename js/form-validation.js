@@ -1,5 +1,5 @@
 import { showErrorUploadMessage } from './error-messages.js';
-import { isEscapeKey } from './utile.js';
+import { isEscapeKey, isUnique } from './utile.js';
 import { showSuccessMessage } from './error-messages.js';
 import { sendData } from './api.js';
 import { getDefaultForm } from './open-submit-form.js';
@@ -8,8 +8,8 @@ import { getDefaultForm } from './open-submit-form.js';
 const HASHTAG_START = '#';
 const HASHTAG_MIN_LENGTH = 2;
 const HASHTAG_MAX_LENGTH = 19;
-const tagRegexp = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const COMMENT_MAX_LENGTH = 140;
+const tagRegexp = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const maxHashtagNumber = 5;
 
 const uploadFileForm = document.querySelector('.img-upload__form');
@@ -23,7 +23,6 @@ const pristine = new Pristine(uploadFileForm, {
   errorTextParent:'img-upload__field-wrapper',
 });
 
-const isUnique = (arr) => new Set(arr).size === arr.length;
 
 const serializeHashtags = (value) => value.trim().toLowerCase().split(/\s+/);
 

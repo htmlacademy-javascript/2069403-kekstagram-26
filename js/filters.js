@@ -1,7 +1,7 @@
 import { getData } from './api.js';
 import { showErrorUploadMessage } from './error-messages.js';
 import { renderPhotos } from './thumbnails.js';
-import { debounce } from './utile.js';
+import { debounce, shuffleArrayPictures } from './utile.js';
 
 const RANDOM_PHOTOS_COUNT = 10;
 
@@ -11,13 +11,6 @@ const randomFilter = photoFilters.querySelector('#filter-random');
 const discussedFilter = photoFilters.querySelector('#filter-discussed');
 const photoFiltersForm = photoFilters.querySelector('.img-filters__form');
 
-
-const shuffleArrayPictures = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-};
 
 const getRandomPhotos = (photos) => {
   const photosCopy = photos.slice();
@@ -34,9 +27,9 @@ const clearPhotosContainer = () => {
   });
 };
 
+
 const filterPhotos = (evt, photos) => {
   clearPhotosContainer();
-
   if (evt.target === defaultFilter) {
     renderPhotos(photos);
   }
@@ -46,6 +39,7 @@ const filterPhotos = (evt, photos) => {
   if (evt.target === discussedFilter) {
     renderPhotos(sortPhotosByCommentsNumber(photos));
   }
+  evt.target.disabled = true;
 };
 
 

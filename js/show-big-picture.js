@@ -1,13 +1,14 @@
 import { isEscapeKey } from './utile.js';
 
+const COMMENT_LIST_MAX_LENGTH = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const scrollBackground = document.querySelector('body');
 const commentsList = bigPicture.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social-comment').content.querySelector('.social__comment');
 const displayedCommentNumber = bigPicture.querySelector('.displayed-comment-number');
-
-const onShowMoreCommentsButton = bigPicture.querySelector('.comments-loader');
+const showMoreCommentsButton = bigPicture.querySelector('.comments-loader');
 
 
 const onBigPuctureEscpaeKey = (evt) => {
@@ -34,12 +35,11 @@ const renderComment = ({avatar, name, message}) => {
 const renderComments = (comments) => commentsList.append(...comments.map(renderComment));
 
 let Comments = [];
-const COMMENT_LIST_MAX_LENGTH = 5;
 let currentDisplayedComments = 0;
 
 const showMoreComments = () => {
   if (Comments.length <= COMMENT_LIST_MAX_LENGTH) {
-    onShowMoreCommentsButton.classList.add('hidden');
+    showMoreCommentsButton.classList.add('hidden');
   }
   const forRendering = Comments.slice(0, COMMENT_LIST_MAX_LENGTH);
   Comments = Comments.slice(COMMENT_LIST_MAX_LENGTH);
@@ -55,7 +55,7 @@ const renderBigPicture = (url, likes, comments, description) => {
   bigPicture.querySelector('.comments-count').textContent = comments.length;
   bigPicture.querySelector('.social__caption').textContent = description;
 
-  onShowMoreCommentsButton.classList.remove('hidden');
+  showMoreCommentsButton.classList.remove('hidden');
   Comments = comments;
   showMoreComments(Comments);
 
@@ -78,7 +78,8 @@ bigPictureCancel.addEventListener('click', (evt) => {
 
 });
 
-onShowMoreCommentsButton.addEventListener('click', showMoreComments);
+showMoreCommentsButton.addEventListener('click', (evt) => {showMoreComments(evt);
+});
 
 
 export {renderComment, renderComments, showBigPicture};

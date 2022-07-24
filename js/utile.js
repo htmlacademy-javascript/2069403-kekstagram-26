@@ -10,4 +10,13 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {isEscapeKey, debounce};
+const isUnique = (hashTagList) => new Set(hashTagList).size === hashTagList.length;
+
+const shuffleArrayPictures = (photoList) => {
+  for (let i = photoList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [photoList[i], photoList[j]] = [photoList[j], photoList[i]];
+  }
+};
+
+export {isEscapeKey, debounce, shuffleArrayPictures, isUnique};

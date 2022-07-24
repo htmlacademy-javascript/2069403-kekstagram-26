@@ -2,14 +2,14 @@ import { onCloseErrorPopUp } from './error-messages.js';
 import { isEscapeKey } from './utile.js';
 import { getSliderValue } from './photo-effects.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const uploadFileForm = document.querySelector('.img-upload__form');
 const imageUploadField = document.querySelector('#upload-file');
 const scrollBackground = document.querySelector('body');
 const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
 const uploadImageCancel = uploadFileForm.querySelector('#upload-cancel');
 const fileChooser = document.querySelector('.img-upload__start input[type=file]');
-
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const changeDefaultPhoto = () => {
   fileChooser.addEventListener('change', () => {

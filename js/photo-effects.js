@@ -1,3 +1,8 @@
+const IMAGE_SCALE_CHANGE_STEP = 25;
+const IMAGE_MAX_SCALE = 100;
+const IMAGE_MIN_SCALE = 25;
+
+
 const uploadFileForm = document.querySelector('.img-upload__form');
 const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
 const scaleControlDecrease = uploadFileForm.querySelector('.scale__control--smaller');
@@ -5,11 +10,9 @@ const scaleControlIncrease = uploadFileForm.querySelector('.scale__control--bigg
 const scaleControlValue = uploadFileForm.querySelector('.scale__control--value');
 const photoEffects = uploadFileForm.querySelectorAll('.effects__radio');
 const effectLevelSlider = uploadFileForm.querySelector('.effect-level__slider');
+const imgUploadSlider = uploadFileForm.querySelector('.img-upload__effect-level');
 const effectLevelSliderValue = uploadFileForm.querySelector('.effect-level__value');
 
-const IMAGE_SCALE_CHANGE_STEP = 25;
-const IMAGE_MAX_SCALE = 100;
-const IMAGE_MIN_SCALE = 25;
 
 const effectsSettings = {
   chrome: {
@@ -94,7 +97,7 @@ const getSliderValue = () => {
         imageUploadPreview.style.filter = `brightness(${effectLevelSliderValue.value})`;
         break;
       case 'none':
-        effectLevelSlider.classList.add('hidden');
+        imgUploadSlider.classList.add('hidden');
         break;
     }
   });
@@ -105,13 +108,13 @@ const changeEffectLevel = () => {
     photoEffect.addEventListener('change', () => {
       const settings = effectsSettings[photoEffect.value];
       if (settings) {
-        effectLevelSlider.classList.remove('hidden');
+        imgUploadSlider.classList.remove('hidden');
         effectLevelSlider.noUiSlider.updateOptions(settings);
         effectLevelSlider.noUiSlider.set(settings.range.max);
         return;
       }
       imageUploadPreview.style.filter = '';
-      effectLevelSlider.classList.add('hidden');
+      imgUploadSlider.classList.add('hidden');
     })
   );
 };
