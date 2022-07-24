@@ -1,19 +1,19 @@
 import { unblockSubmitButton } from './form-validation.js';
 import { closeUploadForm, onEditPhotoEscpaeKey } from './open-submit-form.js';
-import { isEscapeKey } from './utile.js';
+import { isEscapeKey } from './util.js';
 
-const uploadErrorPopUp = document.querySelector('#error').content.querySelector('.error');
-const uploadSuccessPopUp = document.querySelector('#success').content.querySelector('.success');
-const successPopup = uploadSuccessPopUp.cloneNode(true);
-const errorPopUp = uploadErrorPopUp.cloneNode(true);
+const uploadErrorPopUpElement = document.querySelector('#error').content.querySelector('.error');
+const uploadSuccessPopUpElement = document.querySelector('#success').content.querySelector('.success');
+const errorPopUpElement = uploadErrorPopUpElement.cloneNode(true);
+const successPopupElement = uploadSuccessPopUpElement.cloneNode(true);
 
 const onCloseSuccessPopUp = () => {
   document.querySelectorAll('.success').forEach((element) => element.remove());
 };
 
 const onSuccessMessageButton = () => {
-  const successButton = document.body.querySelector('.success__button');
-  successButton.addEventListener('click', onCloseSuccessPopUp);
+  const successButtonElement = document.body.querySelector('.success__button');
+  successButtonElement.addEventListener('click', onCloseSuccessPopUp);
 };
 
 const onDocumentClick = () => {
@@ -33,8 +33,8 @@ const onCloseErrorPopUp = () => {
 };
 
 const onErrorMessageButton = () => {
-  const errorButton = document.querySelector('.error__button');
-  errorButton.addEventListener('click', onCloseErrorPopUp);
+  const errorButtonElement = document.querySelector('.error__button');
+  errorButtonElement.addEventListener('click', onCloseErrorPopUp);
 };
 
 
@@ -44,13 +44,13 @@ const onDocumentErrorClick = () => {
 
 
 const showErrorLoadMessage = () => {
-  errorPopUp.querySelector('.error__title').textContent = 'Упс, что-то пошло не так';
-  errorPopUp.querySelector('.error__button').classList.add('hidden');
-  document.body.append(errorPopUp);
+  errorPopUpElement.querySelector('.error__title').textContent = 'Упс, что-то пошло не так';
+  errorPopUpElement.querySelector('.error__button').classList.add('hidden');
+  document.body.append(errorPopUpElement);
 };
 
 const showSuccessMessage = (evt) => {
-  document.body.append(successPopup);
+  document.body.append(successPopupElement);
 
   onSuccessMessageButton();
   onSuccessMessageEscKey();
@@ -60,7 +60,7 @@ const showSuccessMessage = (evt) => {
 
 const showErrorUploadMessage = (evt) => {
   unblockSubmitButton();
-  document.body.append(errorPopUp);
+  document.body.append(errorPopUpElement);
   onErrorMessageButton();
   onEditPhotoEscpaeKey(evt);
   onDocumentErrorClick();

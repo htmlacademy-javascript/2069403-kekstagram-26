@@ -1,15 +1,15 @@
 import { getData } from './api.js';
 import { showErrorUploadMessage } from './error-messages.js';
 import { renderPhotos } from './thumbnails.js';
-import { debounce, shuffleArrayPictures } from './utile.js';
+import { debounce, shuffleArrayPictures } from './util.js';
 
 const RANDOM_PHOTOS_COUNT = 10;
 
-const photoFilters = document.querySelector('.img-filters');
-const defaultFilter = photoFilters.querySelector('#filter-default');
-const randomFilter = photoFilters.querySelector('#filter-random');
-const discussedFilter = photoFilters.querySelector('#filter-discussed');
-const photoFiltersForm = photoFilters.querySelector('.img-filters__form');
+const photoFiltersElement = document.querySelector('.img-filters');
+const defaultFilterElement = photoFiltersElement.querySelector('#filter-default');
+const randomFilterElement = photoFiltersElement.querySelector('#filter-random');
+const discussedFilterElement = photoFiltersElement.querySelector('#filter-discussed');
+const photoFiltersFormElement = photoFiltersElement.querySelector('.img-filters__form');
 
 
 const getRandomPhotos = (photos) => {
@@ -27,30 +27,32 @@ const clearPhotosContainer = () => {
   });
 };
 
-
-const filterPhotos = (evt, photos) => {
-  clearPhotosContainer();
-  if (evt.target === defaultFilter) {
-    renderPhotos(photos);
-  }
-  if (evt.target === randomFilter) {
-    renderPhotos(getRandomPhotos(photos));
-  }
-  if (evt.target === discussedFilter) {
-    renderPhotos(sortPhotosByCommentsNumber(photos));
-  }
-  evt.target.disabled = true;
+const highlightChosenFilter = (evt) => {
+  const filterActiveElement = document.querySelectorAll('.img-filters__button--active');
+  filterActiveElement.forEach((element) => element.classList.remove('img-filters__button--active'));
+  evt.target.classList.add('img-filters__button--active');
 };
 
+const filterPhotos = (evt, photos) => {
+  if (evt.target === defaultFilterElement && !evt.target.classList.contains('img-filters__button--active')) {
+    highlightChosenFilter(evt);
+    clearPhotosContainer();
+    renderPhotos(photos);
+  }
+  if (evt.target === randomFilterElement && !evt.target.classList.contains('img-filters__button--active')) {
+    highlightChosenFilter(evt);
+    clearPhotosContainer();
+    renderPhotos(getRandomPhotos(photos));
+  }
+  if (evt.target === discussedFilterElement && !evt.target.classList.contains('img-filters__button--active')) {
+    highlightChosenFilter(evt);
+    clearPhotosContainer();
+    renderPhotos(sortPhotosByCommentsNumber(photos));
+  }
+};
 
 const startFiltering = (photos) => {
-  photoFiltersForm.addEventListener('click', debounce((evt) => filterPhotos(evt, photos)));
-
-  photoFiltersForm.addEventListener('click', (evt) => {
-    const filterActive = document.querySelectorAll('.img-filters__button--active');
-    filterActive.forEach((element) => element.classList.remove('img-filters__button--active'));
-    evt.target.classList.add('img-filters__button--active');
-  });
+  photoFiltersFormElement.addEventListener('click', debounce((evt) => filterPhotos(evt, photos)));
 };
 
 const initRendering = (photos) => {

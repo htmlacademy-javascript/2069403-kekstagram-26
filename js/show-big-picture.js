@@ -1,14 +1,14 @@
-import { isEscapeKey } from './utile.js';
+import { isEscapeKey } from './util.js';
 
 const COMMENT_LIST_MAX_LENGTH = 5;
 
-const bigPicture = document.querySelector('.big-picture');
-const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-const scrollBackground = document.querySelector('body');
-const commentsList = bigPicture.querySelector('.social__comments');
+const bigPictureElement = document.querySelector('.big-picture');
+const bigPictureCancelElement = bigPictureElement.querySelector('.big-picture__cancel');
+const scrollBackgroundElement = document.querySelector('body');
+const commentsListElement = bigPictureElement.querySelector('.social__comments');
 const commentTemplate = document.querySelector('#social-comment').content.querySelector('.social__comment');
-const displayedCommentNumber = bigPicture.querySelector('.displayed-comment-number');
-const showMoreCommentsButton = bigPicture.querySelector('.comments-loader');
+const displayedCommentNumberElement = bigPictureElement.querySelector('.displayed-comment-number');
+const showMoreCommentsButtonElement = bigPictureElement.querySelector('.comments-loader');
 
 
 const onBigPuctureEscpaeKey = (evt) => {
@@ -19,8 +19,8 @@ const onBigPuctureEscpaeKey = (evt) => {
 
 function userBigPictureCloseElement(evt) {
   evt.preventDefault();
-  bigPicture.classList.add('hidden');
-  scrollBackground.classList.remove('modal-open');
+  bigPictureElement.classList.add('hidden');
+  scrollBackgroundElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onBigPuctureEscpaeKey);
 }
 
@@ -32,30 +32,30 @@ const renderComment = ({avatar, name, message}) => {
   return commentBlock;
 };
 
-const renderComments = (comments) => commentsList.append(...comments.map(renderComment));
+const renderComments = (comments) => commentsListElement.append(...comments.map(renderComment));
 
 let Comments = [];
 let currentDisplayedComments = 0;
 
 const showMoreComments = () => {
   if (Comments.length <= COMMENT_LIST_MAX_LENGTH) {
-    showMoreCommentsButton.classList.add('hidden');
+    showMoreCommentsButtonElement.classList.add('hidden');
   }
   const forRendering = Comments.slice(0, COMMENT_LIST_MAX_LENGTH);
   Comments = Comments.slice(COMMENT_LIST_MAX_LENGTH);
   renderComments(forRendering);
 
   currentDisplayedComments += forRendering.length;
-  displayedCommentNumber.textContent = currentDisplayedComments;
+  displayedCommentNumberElement.textContent = currentDisplayedComments;
 };
 
 const renderBigPicture = (url, likes, comments, description) => {
-  bigPicture.querySelector('img').src = url;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.comments-count').textContent = comments.length;
-  bigPicture.querySelector('.social__caption').textContent = description;
+  bigPictureElement.querySelector('img').src = url;
+  bigPictureElement.querySelector('.likes-count').textContent = likes;
+  bigPictureElement.querySelector('.comments-count').textContent = comments.length;
+  bigPictureElement.querySelector('.social__caption').textContent = description;
 
-  showMoreCommentsButton.classList.remove('hidden');
+  showMoreCommentsButtonElement.classList.remove('hidden');
   Comments = comments;
   showMoreComments(Comments);
 
@@ -63,22 +63,22 @@ const renderBigPicture = (url, likes, comments, description) => {
 
 const showBigPicture = (url, likes, comments, description) => {
   currentDisplayedComments = 0;
-  commentsList.innerHTML = '';
-  scrollBackground.classList.add('modal-open');
+  commentsListElement.innerHTML = '';
+  scrollBackgroundElement.classList.add('modal-open');
 
   renderBigPicture(url, likes, comments, description);
 
   document.addEventListener('keydown', onBigPuctureEscpaeKey);
-  bigPicture.classList.remove('hidden');
+  bigPictureElement.classList.remove('hidden');
 };
 
 
-bigPictureCancel.addEventListener('click', (evt) => {
+bigPictureCancelElement.addEventListener('click', (evt) => {
   userBigPictureCloseElement(evt);
 
 });
 
-showMoreCommentsButton.addEventListener('click', (evt) => {showMoreComments(evt);
+showMoreCommentsButtonElement.addEventListener('click', (evt) => {showMoreComments(evt);
 });
 
 
