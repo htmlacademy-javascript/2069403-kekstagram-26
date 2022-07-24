@@ -1,15 +1,18 @@
-const uploadFileForm = document.querySelector('.img-upload__form');
-const imageUploadPreview = uploadFileForm.querySelector('.img-upload__preview');
-const scaleControlDecrease = uploadFileForm.querySelector('.scale__control--smaller');
-const scaleControlIncrease = uploadFileForm.querySelector('.scale__control--bigger');
-const scaleControlValue = uploadFileForm.querySelector('.scale__control--value');
-const photoEffects = uploadFileForm.querySelectorAll('.effects__radio');
-const effectLevelSlider = uploadFileForm.querySelector('.effect-level__slider');
-const effectLevelSliderValue = uploadFileForm.querySelector('.effect-level__value');
-
 const IMAGE_SCALE_CHANGE_STEP = 25;
 const IMAGE_MAX_SCALE = 100;
 const IMAGE_MIN_SCALE = 25;
+
+
+const uploadFileFormElement = document.querySelector('.img-upload__form');
+const imageUploadPreviewElement = uploadFileFormElement.querySelector('.img-upload__preview');
+const scaleControlDecreaseElement = uploadFileFormElement.querySelector('.scale__control--smaller');
+const scaleControlIncreaseElement = uploadFileFormElement.querySelector('.scale__control--bigger');
+const scaleControlValueElement = uploadFileFormElement.querySelector('.scale__control--value');
+const photoEffectsElement = uploadFileFormElement.querySelectorAll('.effects__radio');
+const effectLevelSliderElement = uploadFileFormElement.querySelector('.effect-level__slider');
+const imgUploadSliderElement = uploadFileFormElement.querySelector('.img-upload__effect-level');
+const effectLevelSliderValueElement = uploadFileFormElement.querySelector('.effect-level__value');
+
 
 const effectsSettings = {
   chrome: {
@@ -54,64 +57,64 @@ const effectsSettings = {
   },
 };
 
-const getIntegerValue = () => parseFloat(scaleControlValue.value);
+const getIntegerValue = () => parseFloat(scaleControlValueElement.value);
 
 
 const changeImageScale = (step) => {
   const imageInitialScale = getIntegerValue() + step;
   if(imageInitialScale <= IMAGE_MAX_SCALE && imageInitialScale >= IMAGE_MIN_SCALE) {
-    imageUploadPreview.style.transform = `scale(${imageInitialScale / 100})`;
-    scaleControlValue.value = `${imageInitialScale }%`;
+    imageUploadPreviewElement.style.transform = `scale(${imageInitialScale / 100})`;
+    scaleControlValueElement.value = `${imageInitialScale }%`;
   }
 };
 
 const makePictureSmaller = () => {
-  scaleControlDecrease.addEventListener('click', () => changeImageScale(-IMAGE_SCALE_CHANGE_STEP));
+  scaleControlDecreaseElement.addEventListener('click', () => changeImageScale(-IMAGE_SCALE_CHANGE_STEP));
 };
 
 const makePictureBigger = () => {
-  scaleControlIncrease.addEventListener('click', () => changeImageScale(IMAGE_SCALE_CHANGE_STEP));
+  scaleControlIncreaseElement.addEventListener('click', () => changeImageScale(IMAGE_SCALE_CHANGE_STEP));
 };
 
 const getSliderValue = () => {
-  effectLevelSlider.noUiSlider.on('update', () => {
-    effectLevelSliderValue.value = effectLevelSlider.noUiSlider.get();
-    const selectedFilter = uploadFileForm.querySelector('input[name="effect"]:checked').value;
-    switch(selectedFilter) {
+  effectLevelSliderElement.noUiSlider.on('update', () => {
+    effectLevelSliderValueElement.value = effectLevelSliderElement.noUiSlider.get();
+    const selectedFilterElement = uploadFileFormElement.querySelector('input[name="effect"]:checked').value;
+    switch(selectedFilterElement) {
       case 'chrome':
-        imageUploadPreview.style.filter = `grayscale(${effectLevelSliderValue.value})`;
+        imageUploadPreviewElement.style.filter = `grayscale(${effectLevelSliderValueElement.value})`;
         break;
       case 'sepia':
-        imageUploadPreview.style.filter = `sepia(${effectLevelSliderValue.value})`;
+        imageUploadPreviewElement.style.filter = `sepia(${effectLevelSliderValueElement.value})`;
         break;
       case 'marvin':
-        imageUploadPreview.style.filter = `invert(${effectLevelSliderValue.value}%)`;
+        imageUploadPreviewElement.style.filter = `invert(${effectLevelSliderValueElement.value}%)`;
         break;
       case 'phobos':
-        imageUploadPreview.style.filter = `blur(${effectLevelSliderValue.value}px)`;
+        imageUploadPreviewElement.style.filter = `blur(${effectLevelSliderValueElement.value}px)`;
         break;
       case 'heat':
-        imageUploadPreview.style.filter = `brightness(${effectLevelSliderValue.value})`;
+        imageUploadPreviewElement.style.filter = `brightness(${effectLevelSliderValueElement.value})`;
         break;
       case 'none':
-        effectLevelSlider.classList.add('hidden');
+        imgUploadSliderElement.classList.add('hidden');
         break;
     }
   });
 };
 
 const changeEffectLevel = () => {
-  photoEffects.forEach((photoEffect) =>
-    photoEffect.addEventListener('change', () => {
-      const settings = effectsSettings[photoEffect.value];
+  photoEffectsElement.forEach((photoEffectElement) =>
+    photoEffectElement.addEventListener('change', () => {
+      const settings = effectsSettings[photoEffectElement.value];
       if (settings) {
-        effectLevelSlider.classList.remove('hidden');
-        effectLevelSlider.noUiSlider.updateOptions(settings);
-        effectLevelSlider.noUiSlider.set(settings.range.max);
+        imgUploadSliderElement.classList.remove('hidden');
+        effectLevelSliderElement.noUiSlider.updateOptions(settings);
+        effectLevelSliderElement.noUiSlider.set(settings.range.max);
         return;
       }
-      imageUploadPreview.style.filter = '';
-      effectLevelSlider.classList.add('hidden');
+      imageUploadPreviewElement.style.filter = '';
+      imgUploadSliderElement.classList.add('hidden');
     })
   );
 };
@@ -119,15 +122,15 @@ const changeEffectLevel = () => {
 const initChangeEffects = () => {
   getSliderValue();
   changeEffectLevel();
-  photoEffects.forEach((photoEffect) =>
-    photoEffect.addEventListener('change', () => {
-      const selected = uploadFileForm.querySelector('input[name="effect"]:checked');
-      imageUploadPreview.classList = `img-upload__preview effects__preview--${selected}`;
+  photoEffectsElement.forEach((photoEffectElement) =>
+    photoEffectElement.addEventListener('change', () => {
+      const selectedElement = uploadFileFormElement.querySelector('input[name="effect"]:checked');
+      imageUploadPreviewElement.classList = `img-upload__preview effects__preview--${selectedElement}`;
     })
   );
 };
 
-noUiSlider.create(effectLevelSlider, {
+noUiSlider.create(effectLevelSliderElement, {
   range: {
     min: 1,
     max: 10,
